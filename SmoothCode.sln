@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32407.343
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MeetupTime", "MeetupTime", "{51211531-1665-4EAD-8DF4-79E25AD14C53}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TaskOrganizer", "TaskOrganizer", "{C231D92F-6B59-4571-BB02-F016E96AE9A2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MedicPatrol", "MedicPatrol", "{F277D0D3-D228-40C0-AB45-5F8DF2A8EBA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeetupTime.API", "MeetupTime\MeetupTime.API\MeetupTime.API.csproj", "{8B9F8305-387F-4091-A661-3FF88F605E65}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RecordsBook", "RecordsBook", "{C080304A-E6E2-4014-9094-945E46266F5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecordsBook.API", "RecordsBook\RecordsBook.API\RecordsBook.API.csproj", "{5C84D138-60D1-4A26-AFC7-958A1AFD0C3D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8B9F8305-387F-4091-A661-3FF88F605E65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B9F8305-387F-4091-A661-3FF88F605E65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B9F8305-387F-4091-A661-3FF88F605E65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B9F8305-387F-4091-A661-3FF88F605E65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C84D138-60D1-4A26-AFC7-958A1AFD0C3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C84D138-60D1-4A26-AFC7-958A1AFD0C3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C84D138-60D1-4A26-AFC7-958A1AFD0C3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C84D138-60D1-4A26-AFC7-958A1AFD0C3D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8B9F8305-387F-4091-A661-3FF88F605E65} = {51211531-1665-4EAD-8DF4-79E25AD14C53}
+		{5C84D138-60D1-4A26-AFC7-958A1AFD0C3D} = {C080304A-E6E2-4014-9094-945E46266F5E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4BFE7FDB-071D-4ADC-A3A8-8DB2D5B52A03}
+	EndGlobalSection
+EndGlobal
