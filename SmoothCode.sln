@@ -9,11 +9,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TaskOrganizer", "TaskOrgani
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MedicPatrol", "MedicPatrol", "{F277D0D3-D228-40C0-AB45-5F8DF2A8EBA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeetupTime.API", "MeetupTime\MeetupTime.API\MeetupTime.API.csproj", "{8B9F8305-387F-4091-A661-3FF88F605E65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeetupTime.API", "MeetupTime\MeetupTime.API\MeetupTime.API.csproj", "{8B9F8305-387F-4091-A661-3FF88F605E65}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RecordsBook", "RecordsBook", "{C080304A-E6E2-4014-9094-945E46266F5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecordsBook.API", "RecordsBook\RecordsBook.API\RecordsBook.API.csproj", "{5C84D138-60D1-4A26-AFC7-958A1AFD0C3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordsBook.API", "RecordsBook\RecordsBook.API\RecordsBook.API.csproj", "{5C84D138-60D1-4A26-AFC7-958A1AFD0C3D}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database", "RecordsBook\Database\Database.sqlproj", "{E9ABB250-67EC-473A-B6D2-5A42F1D3498D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,12 @@ Global
 		{5C84D138-60D1-4A26-AFC7-958A1AFD0C3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C84D138-60D1-4A26-AFC7-958A1AFD0C3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C84D138-60D1-4A26-AFC7-958A1AFD0C3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9ABB250-67EC-473A-B6D2-5A42F1D3498D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9ABB250-67EC-473A-B6D2-5A42F1D3498D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9ABB250-67EC-473A-B6D2-5A42F1D3498D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E9ABB250-67EC-473A-B6D2-5A42F1D3498D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9ABB250-67EC-473A-B6D2-5A42F1D3498D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9ABB250-67EC-473A-B6D2-5A42F1D3498D}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -36,6 +44,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{8B9F8305-387F-4091-A661-3FF88F605E65} = {51211531-1665-4EAD-8DF4-79E25AD14C53}
 		{5C84D138-60D1-4A26-AFC7-958A1AFD0C3D} = {C080304A-E6E2-4014-9094-945E46266F5E}
+		{E9ABB250-67EC-473A-B6D2-5A42F1D3498D} = {C080304A-E6E2-4014-9094-945E46266F5E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4BFE7FDB-071D-4ADC-A3A8-8DB2D5B52A03}
