@@ -2,8 +2,8 @@
 	@firstName nvarchar(50),
 	@lastName nvarchar(50),
 	@email nvarchar(max),
-	@phone nvarchar(50)
+	@phoneNumber nvarchar(50)
 AS
 	insert into dbo.[User] (FirstName, LastName, Email, PhoneNumber)
-	values (@firstName, @lastName, @email, @phone)
+	values (@firstName, @lastName, @email, @phoneNumber)
 RETURN 0

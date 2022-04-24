@@ -23,7 +23,7 @@ public class UserData : IUserData
     {
         var result = await _db.LoadData<User, dynamic>(
             "dbo.spUser_GetById",
-            new { Id = id });
+            new { userId = id });
 
         return result.FirstOrDefault();
     }
@@ -35,5 +35,5 @@ public class UserData : IUserData
         _db.SaveData("dbo.spUser_Update", user);
 
     public Task DeleteUser(int id) =>
-        _db.SaveData("dbo.spUser_Delete", new { Id = id });
+        _db.SaveData("dbo.spUser_Delete", new { userId = id });
 }
