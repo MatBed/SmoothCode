@@ -17,6 +17,10 @@ public class Context : DbContext
 
     public DbSet<Lecture> Lectures { get; set; }
 
+    public DbSet<User> Users { get; set; }
+
+    public DbSet<Role> Roles { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Meetup>()
@@ -27,6 +31,9 @@ public class Context : DbContext
         modelBuilder.Entity<Meetup>()
             .HasMany(m => m.Lectures)
             .WithOne(l => l.Meetup);
+
+        modelBuilder.Entity<User>()
+            .HasOne(r => r.Role);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
