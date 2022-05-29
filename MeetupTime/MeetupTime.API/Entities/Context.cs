@@ -29,6 +29,9 @@ public class Context : DbContext
             .HasForeignKey<Location>(l => l.MeetupId);
 
         modelBuilder.Entity<Meetup>()
+            .HasOne(c => c.CreatedBy);
+
+        modelBuilder.Entity<Meetup>()
             .HasMany(m => m.Lectures)
             .WithOne(l => l.Meetup);
 

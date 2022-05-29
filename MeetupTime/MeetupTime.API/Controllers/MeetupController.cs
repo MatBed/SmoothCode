@@ -1,21 +1,27 @@
 ﻿using AutoMapper;
+using MeetupTime.API.Authorization;
 using MeetupTime.API.Entities;
 using MeetupTime.API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace MeetupTime.API.Controllers;
 
 [Route("api/meetup")]
+[Authorize]
 public class MeetupController : ControllerBase
 {
     private readonly Context _context;
     private readonly IMapper _mappper;
+    private readonly IAuthorizationService _authorizationService;
 
-    public MeetupController(Context context, IMapper mappper)
+    public MeetupController(Context context, IMapper mappper, IAuthorizationService authorizationService)
     {
         _context = context;
         _mappper = mappper;
+        _authorizationService = authorizationService;
     }
 
     [HttpGet]
@@ -28,6 +34,7 @@ public class MeetupController : ControllerBase
     }
 
     [HttpGet("{name}")]
+    [Authorize(Policy = "AtLeast18")]
     public ActionResult<MeetupDetailsDto> Get(string name)
     {
         var meetup = _context.Meetups
@@ -46,6 +53,7 @@ public class MeetupController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin,Moderator")]
     public ActionResult Post([FromBody]MeetupDto model)
     {
         if (!ModelState.IsValid)
@@ -54,6 +62,11 @@ public class MeetupController : ControllerBase
         }
 
         var meetup = _mappper.Map<Meetup>(model);
+
+        var userId = User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value;
+
+        meetup.CreatedById = int.Parse(userId);
+
         _context.Meetups.Add(meetup);
         _context.SaveChanges();
 
@@ -71,6 +84,13 @@ public class MeetupController : ControllerBase
         if (meetup == null)
         {
             return NotFound();
+        }
+
+        var authorizationResult = _authorizationService.AuthorizeAsync(User, meetup, new ResourceOperationRequirement(OperationType.Update)).Result;
+
+        if (!authorizationResult.Succeeded)
+        {
+            return Forbid();
         }
 
         if (!ModelState.IsValid)
@@ -97,6 +117,13 @@ public class MeetupController : ControllerBase
         if (meetup == null)
         {
             return NotFound();
+        }
+
+        var authorizationResult = _authorizationService.AuthorizeAsync(User, meetup, new ResourceOperationRequirement(OperationType.Update)).Result;
+
+        if (!authorizationResult.Succeeded)
+        {
+            return Forbid();
         }
 
         _context.Remove(meetup);

@@ -1,9 +1,11 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using MeetupTime.API.Authorization;
 using MeetupTime.API.Entities;
 using MeetupTime.API.Identity;
 using MeetupTime.API.Models;
 using MeetupTime.API.Validators;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -38,6 +40,14 @@ builder.Services.AddControllers().AddFluentValidation();
 builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserValidator>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
+builder.Services.AddScoped<IAuthorizationHandler, MinimumAgeHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, MeetupResourceOperationHandler>();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("HasNationality", builder => builder.RequireClaim("Nationality", "French", "English"));
+    options.AddPolicy("AtLeast18", builder => builder.AddRequirements(new MinimumAgeRequirement(18)));
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
@@ -61,12 +71,15 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseAuthentication();
+
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
+app.UseRouting();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+ 
