@@ -2,6 +2,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using MeetupTime.API.Authorization;
 using MeetupTime.API.Entities;
+using MeetupTime.API.Filters;
 using MeetupTime.API.Identity;
 using MeetupTime.API.Models;
 using MeetupTime.API.Validators;
@@ -35,8 +36,10 @@ builder.Services.AddAuthentication(options =>
 
 // Add services to the container.
 
-builder.Services.AddControllers().AddFluentValidation();
+builder.Services.AddControllers(options => options.Filters.Add(typeof(ExceptionFilter)))
+    .AddFluentValidation();
 
+builder.Services.AddScoped<TimeTrackFilter>();
 builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserValidator>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();

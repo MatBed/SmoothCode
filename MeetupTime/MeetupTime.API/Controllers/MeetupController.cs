@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MeetupTime.API.Authorization;
 using MeetupTime.API.Entities;
+using MeetupTime.API.Filters;
 using MeetupTime.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ namespace MeetupTime.API.Controllers;
 
 [Route("api/meetup")]
 [Authorize]
+[ServiceFilter(typeof(TimeTrackFilter))]
 public class MeetupController : ControllerBase
 {
     private readonly Context _context;
@@ -25,6 +27,7 @@ public class MeetupController : ControllerBase
     }
 
     [HttpGet]
+    [NationalityFilter("German,Russian")]
     public ActionResult<List<MeetupDetailsDto>> Get()
     {
         var meetups = _context.Meetups.ToList();
@@ -35,6 +38,7 @@ public class MeetupController : ControllerBase
 
     [HttpGet("{name}")]
     [Authorize(Policy = "AtLeast18")]
+    [NationalityFilter("English")]
     public ActionResult<MeetupDetailsDto> Get(string name)
     {
         var meetup = _context.Meetups
