@@ -59,10 +59,20 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "MeetupAPI", Version = "v1" });
 });
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FrontEndClient", builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins(""));
+});
+
 builder.Services.AddDbContext<Context>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
+
+app.UseResponseCaching();
+app.UseStaticFiles();
+app.UseCors("FrontEndClient");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
