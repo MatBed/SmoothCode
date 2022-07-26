@@ -1,6 +1,6 @@
 using FactoryPatternApp.Data;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+using FactoryPatternApp.Factories;
+using FactoryPatternApp.Samples;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddAbstractFactory<ISampleOne, SampleOne>();
+builder.Services.AddAbstractFactory<ISampleTwo, SampleTwo>();
+builder.Services.AddGenericClassWithDataFactory();
+builder.Services.AddVehicleFactory();
 
 var app = builder.Build();
 

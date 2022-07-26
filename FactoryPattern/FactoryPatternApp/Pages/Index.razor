@@ -1,9 +1,40 @@
-﻿@page "/"
+﻿@using FactoryPatternApp.Samples
+@page "/"
+@inject IAbstractFactory<ISampleOne> factory
+@inject IAbstractFactory<ISampleTwo> factoryTwo
+@inject IUserDataFactory userData
+@inject IVehicleFactory vehicleFactory;
 
 <PageTitle>Index</PageTitle>
 
 <h1>Hello, world!</h1>
 
-Welcome to your new app.
+Welcome to your new app @user?.Name.
+
+<h2>@currentTime?.CurrentDateTime</h2>
+<h2>@randomValue?.RandomValue</h2>
+<h2>Your car: @vehicle?.VehicleType</h2>
+<h2>@vehicle?.Start()</h2>
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+
+<button class="btn btn-primary" @onclick="GetNewTime">Get New Time</button>
+
+@code {
+	ISampleOne? currentTime;
+	ISampleTwo? randomValue;
+	IUserData? user;
+	IVehicle? vehicle;
+
+	protected override void OnInitialized()
+	{
+		user = userData.Create("Mateusz");
+		vehicle = vehicleFactory.Create("Truck");
+	}
+
+	private void GetNewTime()
+	{
+		currentTime = factory.Create();
+		randomValue = factoryTwo.Create();
+	}
+}
