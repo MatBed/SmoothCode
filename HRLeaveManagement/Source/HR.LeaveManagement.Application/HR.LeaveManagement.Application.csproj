@@ -16,8 +16,4 @@
     <ProjectReference Include="..\HR.LeaveManagement.Core\HR.LeaveManagement.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\LeaveType\Commands\" />
-  </ItemGroup>
-
 </Project>
