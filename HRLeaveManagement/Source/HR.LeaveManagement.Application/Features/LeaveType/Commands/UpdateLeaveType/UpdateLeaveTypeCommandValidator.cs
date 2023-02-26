@@ -13,6 +13,7 @@ public class UpdateLeaveTypeCommandValidator : AbstractValidator<UpdateLeaveType
     {
         RuleFor(p => p.Id)
             .NotNull()
+            .GreaterThan(0).WithMessage("{PropertyName} cannot be less than 1")
             .MustAsync(LeaveTypeMustExist);
 
         RuleFor(p => p.Name)
