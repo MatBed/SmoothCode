@@ -21,7 +21,7 @@ public class ApiAuthenticationStateProvider : AuthenticationStateProvider
         var user = new ClaimsPrincipal(new ClaimsIdentity());
         var isTokenPresent = await _localStorage.ContainKeyAsync("token");
 
-        if (isTokenPresent)
+        if (!isTokenPresent)
         {
             return new AuthenticationState(user);
         }
@@ -45,17 +45,17 @@ public class ApiAuthenticationStateProvider : AuthenticationStateProvider
 
     public async Task LoggedOut()
     {
-        var claims = await GetClaims();
-        var user = new ClaimsPrincipal(new ClaimsIdentity(claims, "jwt"));
-        var authState = Task.FromResult(new AuthenticationState(user));
+        await _localStorage.RemoveItemAsync("token");
+        var nobody = new ClaimsPrincipal(new ClaimsIdentity(new ClaimsIdentity()));
+        var authState = Task.FromResult(new AuthenticationState(nobody));
         NotifyAuthenticationStateChanged(authState);
     }
 
     public async Task LoggedIn()
     {
-        await _localStorage.RemoveItemAsync("token");
-        var nobody = new ClaimsPrincipal(new ClaimsIdentity(new ClaimsIdentity()));
-        var authState = Task.FromResult(new AuthenticationState(nobody));
+        var claims = await GetClaims();
+        var user = new ClaimsPrincipal(new ClaimsIdentity(claims, "jwt"));
+        var authState = Task.FromResult(new AuthenticationState(user));
         NotifyAuthenticationStateChanged(authState);
     }
 
