@@ -1,5 +1,4 @@
 ﻿using HR.LeaveManagement.Core.Common;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HR.LeaveManagement.Core;
 

@@ -13,13 +13,19 @@ internal class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<Change
     private readonly ILeaveTypeRepository _leaveTypeRepository;
     private readonly IMapper _mapper;
     private readonly IEmailSender _emailSender;
+    private readonly ILeaveAllocationRepository _leaveAllocationRepository;
 
-    public ChangeLeaveRequestApprovalCommandHandler(ILeaveRequestRepository leaveRequestRepository, ILeaveTypeRepository leaveTypeRepository, IMapper mapper, IEmailSender emailSender)
+    public ChangeLeaveRequestApprovalCommandHandler(ILeaveRequestRepository leaveRequestRepository, 
+        ILeaveTypeRepository leaveTypeRepository, 
+        IMapper mapper, 
+        IEmailSender emailSender,
+        ILeaveAllocationRepository leaveAllocationRepository)
     {
         _leaveRequestRepository = leaveRequestRepository;
         _leaveTypeRepository = leaveTypeRepository;
         _mapper = mapper;
         _emailSender = emailSender;
+        _leaveAllocationRepository = leaveAllocationRepository;
     }
 
     public async Task<Unit> Handle(ChangeLeaveRequestApprovalCommand request, CancellationToken cancellationToken)
@@ -34,14 +40,30 @@ internal class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<Change
         leaveRequest.Approved = request.Approved;
         await _leaveRequestRepository.UpdateAsync(leaveRequest);
 
-        var email = new EmailMessage
+        if (request.Approved)
         {
-            To = string.Empty,
-            Body = $"The approval status for your leave request for {leaveRequest.StartDate:D} to {leaveRequest.EndDate:D} has been updated seccessfully.",
-            Subject = "Leave Request Approval Status Updated"
-        };
+            int daysRequested = (int)(leaveRequest.EndDate - leaveRequest.StartDate).TotalDays;
+            var allocation = await _leaveAllocationRepository.GetUserAllocations(leaveRequest.RequestingEmployeeId, leaveRequest.LeaveTypeId);
+            allocation.NumberOfDays -= daysRequested;
 
-        await _emailSender.SendEmail(email);
+            await _leaveAllocationRepository.UpdateAsync(allocation);
+        }
+
+        try
+        {
+            var email = new EmailMessage
+            {
+                To = string.Empty,
+                Body = $"The approval status for your leave request for {leaveRequest.StartDate:D} to {leaveRequest.EndDate:D} has been updated seccessfully.",
+                Subject = "Leave Request Approval Status Updated"
+            };
+
+            await _emailSender.SendEmail(email);
+        }
+        catch (Exception)
+        {
+            // TODO: log exception
+        }
 
         return Unit.Value;
     }

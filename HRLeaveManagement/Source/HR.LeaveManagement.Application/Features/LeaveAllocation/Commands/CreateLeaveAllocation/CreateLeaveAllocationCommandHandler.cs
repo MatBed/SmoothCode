@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using HR.LeaveManagement.Application.Contracts.Identity;
+﻿using HR.LeaveManagement.Application.Contracts.Identity;
 using HR.LeaveManagement.Application.Contracts.Persistence;
 using HR.LeaveManagement.Application.Exceptions;
 using MediatR;
@@ -9,17 +8,14 @@ namespace HR.LeaveManagement.Application.Features.LeaveAllocation.Commands.Creat
 public class CreateLeaveAllocationCommandHandler : IRequestHandler<CreateLeaveAllocationCommand, Unit>
 {
     private readonly ILeaveAllocationRepository _leaveAllocationRepository;
-    private readonly IMapper _mapper;
     private readonly ILeaveTypeRepository _leaveTypeRepository;
     private readonly IUserService _userService;
 
     public CreateLeaveAllocationCommandHandler(ILeaveAllocationRepository leaveAllocationRepository, 
-        IMapper mapper, 
         ILeaveTypeRepository leaveTypeRepository,
         IUserService userService)
     {
         _leaveAllocationRepository = leaveAllocationRepository;
-        _mapper = mapper;
         _leaveTypeRepository = leaveTypeRepository;
         _userService = userService;
     }
