@@ -1,16 +1,20 @@
 using Microsoft.AspNetCore.Components;
 using HR.LeaveManagement.BlazorUI.Conntracts;
 using HR.LeaveManagement.BlazorUI.Models.LeaveTypes;
+using Blazored.Toast.Services;
 
 namespace HR.LeaveManagement.BlazorUI.Pages.LeaveTypes;
 
 public partial class Create
 {
     [Inject]
-    NavigationManager _navManager { get; set; }
+    NavigationManager NavManager { get; set; }
 
     [Inject]
-    ILeaveTypeService _client { get; set; }
+    ILeaveTypeService Client { get; set; }
+
+    [Inject]
+    IToastService ToastService { get; set; }
 
     public string Message { get; private set; }
 
@@ -18,11 +22,12 @@ public partial class Create
 
     async Task CreateLeaveType()
     {
-        var response = await _client.CreateLeaveType(leaveType);
+        var response = await Client.CreateLeaveType(leaveType);
 
         if (response.Success)
         {
-            _navManager.NavigateTo("/leavetypes/");
+            ToastService.ShowSuccess("Leave type created successfully.");
+            NavManager.NavigateTo("/leavetypes/");
         }
 
         Message = response.Message;

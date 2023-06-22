@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using HR.LeaveManagement.BlazorUI.Conntracts;
 using HR.LeaveManagement.BlazorUI.Models.LeaveTypes;
+using Blazored.Toast.Services;
 
 namespace HR.LeaveManagement.BlazorUI.Pages.LeaveTypes;
 
@@ -14,6 +15,9 @@ public partial class Index
 
     [Inject]
     public ILeaveAllocationService LeaveAllocationService { get; set; }
+
+    [Inject]
+    IToastService ToastService { get; set; }
 
     public List<LeaveTypeVM> LeaveTypes { get; private set; }
 
@@ -50,7 +54,8 @@ public partial class Index
 
         if (response.Success)
         {
-            StateHasChanged();
+            ToastService.ShowSuccess("Leave type deleted successfully.");
+            await OnInitializedAsync();
         }
         else
         {
